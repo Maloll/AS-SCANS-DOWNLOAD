@@ -1,19 +1,20 @@
 # AS-SCANS-DOWNLOAD
 
-Un outil simple en ligne de commande (CLI) pour naviguer et télécharger tes scans directement depuis **Anime-Sama**.
+Un outil simple en ligne de commande (CLI) pour naviguer et télécharger rapidement des scans directement depuis **Anime-Sama**.
 
 ## 🚀 Fonctionnalités
 Ce tool te permet de :
-* **Rechercher** un manga directement dans ton terminal.
+* **Rechercher** un manga/manwha directement dans ton terminal.
 * **Naviguer** dans la liste des chapitres disponibles.
 * **Télécharger une plage de chapitres** : Tu donnes le chapitre de début, le chapitre de fin, et le script s'occupe du reste.
+* (Les chapitres sont sauvegarder au format **.png**, sous la forme d'une longue et unique image, ce qui rends les scans lisible sur mobile comme sur desktop)
 
 ## 🛠️ Utilisation
 1. Lance le script.
 2. Tape le nom du manga/manhwa que tu cherches.
 3. Sélectionne le manga/manhwa dans la liste.
 4. Indique la plage de chapitres à récupérer (ex : du chapitre 10 au 25).
-5. Les chapitres sont téléchargés en long *.png* et triés par dossier.
+5. Les chapitres sont téléchargés en long **.png** et triés par dossier.
 
 
 ## ❓ Comment ça marche
