@@ -60,11 +60,6 @@ if choix_scan:
         print(f"Choix : {nomOeuvre} - Nombre de chapitres : {c}")
         choix_chapitre_d = int(input("Chapitre Début : "))
         choix_chapitre_f = int(input("Chapitre Fin : "))
-        couleur = input("Couleurs ? (O/N): ")
-        if couleur.lower() == "o":
-            q = 8
-        else:
-            q = 25
         if choix_chapitre_d and verifChap(nomOeuvre,choix_chapitre_d) and choix_chapitre_d != 0:
                 chapValide = True
                 system('cls')
