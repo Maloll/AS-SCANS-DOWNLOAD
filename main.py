@@ -3,7 +3,6 @@ from os import system
 import os
 from AS_scrap_utils import *
 from Download import DownloadChap
-import subprocess
 import shutil
 import time
 import json
@@ -14,14 +13,14 @@ search_url = "https://anime-sama.to/catalogue/?type[]=Scans&search="
 def choose_path():
     base_path = input("Veuillez ajoutez un chemin de téléchargement \n(ex : \"C:/Users/user1/Documents/Scans\"): ")
     data = {"download_path": f"{base_path}"}
-    with open("SCANS_AS/settings.json", "w", encoding="utf-8") as f:
+    with open("settings.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
-if not os.path.exists("SCANS_AS/settings.json") :
+if not os.path.exists("settings.json") :
     choose_path()
 
-if os.path.exists("SCANS_AS/settings.json"):
-    with open("SCANS_AS/settings.json", "r") as f :
+if os.path.exists("settings.json"):
+    with open("settings.json", "r") as f :
         jsonData = json.load(f)
         base_path = jsonData['download_path']
         if not os.path.exists(base_path):
@@ -71,9 +70,8 @@ if choix_scan:
                 system('cls')
                 for i in range(choix_chapitre_d, choix_chapitre_f + 1):
                     DownloadChap(nomOeuvre, i, base_path)
-                    subprocess.Popen(["python", "SCANS_AS/imgStacking.py", f"{nomOeuvre}", f"{i}",f"{q}",f"{base_path}"])
-                time.sleep(6)
+                time.sleep(2)
                 print("Nettoyage des téléchargements...")
                 for i in range(choix_chapitre_d, choix_chapitre_f + 1):
-                    chemin = f"{base_path}/{nomOeuvre.strip()}/{i}"
+                    chemin = f"{base_path}\\{nomOeuvre.strip()}\\{i}"
                     shutil.rmtree(chemin)

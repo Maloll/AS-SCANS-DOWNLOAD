@@ -4,7 +4,18 @@ from bs4 import BeautifulSoup
 from AS_scrap_utils import download, nbPages
 import os
 from concurrent.futures import ThreadPoolExecutor
+import base64
 
+def images_to_html(chemin_chap, nbPages, nomOeuvre, numChapitre, chemin_save):
+    html = []
+    for i in range(1, nbPages+1):
+        with open(f"{chemin_chap}/{i}.jpg", "rb") as f:
+            data =  base64.b64encode(f.read()).decode('utf-8')
+        html.append(f'<img src="data:image/webp;base64,{data}">\n')
+
+    with open(f"{chemin_save}/{nomOeuvre} - {numChapitre}.html", "w") as f :
+        for lines in html :
+            f.write(lines)
 
 def DownloadChap(nomOeuvre, chapitre, base_path) :
     
@@ -32,4 +43,6 @@ def DownloadChap(nomOeuvre, chapitre, base_path) :
 
     with ThreadPoolExecutor(max_workers=10) as executor:
         executor.map(toute_les_img, range(1, pages + 1))
+    
+    images_to_html(chemin,pages,nomOeuvre,chapitre,f"{base_path}/{nomOeuvre}")
     print(f"Chapitre : {chapitre} Téléchargé")
