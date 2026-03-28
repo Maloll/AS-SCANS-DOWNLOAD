@@ -22,7 +22,7 @@ def images_to_html(chemin_chap, nbPages, nomOeuvre, numChapitre, chemin_save):
 
 def DownloadChap(nomOeuvre, chapitre, base_path) :
     base_url = f"https://anime-sama.to/s2/scans/{nomOeuvre}/"
-    url_chapitre = f"{base_url}{chapitre}/"
+    url_chapitre = f"{base_url}{chapitre+1}/"
     pages, chapitres = nbPages(f"{nomOeuvre}", f"{chapitre}")
 
     nomOeuvre = nomOeuvre.strip()
@@ -46,5 +46,5 @@ def DownloadChap(nomOeuvre, chapitre, base_path) :
     with ThreadPoolExecutor(max_workers=10) as executor:
         executor.map(toute_les_img, range(1, pages + 1))
     
-    images_to_html(chemin,pages,nomOeuvre,(chapitre - 1),f"{base_path}/{nomOeuvre}")
+    images_to_html(chemin,pages,nomOeuvre,(chapitre),f"{base_path}/{nomOeuvre}")
     print(f"Chapitre : {chapitre} Téléchargé")
