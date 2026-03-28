@@ -67,6 +67,6 @@ if choix_scan:
                     DownloadChap(nomOeuvre, i, base_path)
                 time.sleep(2)
                 print("Nettoyage des téléchargements...")
-                for i in range(choix_chapitre_d, choix_chapitre_f + 1):
+                for i in range(choix_chapitre_d, choix_chapitre_f+1):
                     chemin = f"{base_path}\\{nomOeuvre.strip()}\\{i}"
                     shutil.rmtree(chemin)

@@ -8,17 +8,19 @@ import base64
 
 def images_to_html(chemin_chap, nbPages, nomOeuvre, numChapitre, chemin_save):
     html = []
+    with open("css.txt","r") as f:
+        css = f.read()
+        html.append(css)
     for i in range(1, nbPages+1):
         with open(f"{chemin_chap}/{i}.jpg", "rb") as f:
             data =  base64.b64encode(f.read()).decode('utf-8')
         html.append(f'<img src="data:image/webp;base64,{data}">\n')
-
+    html.append("</div>")
     with open(f"{chemin_save}/{nomOeuvre} - {numChapitre}.html", "w") as f :
         for lines in html :
             f.write(lines)
 
 def DownloadChap(nomOeuvre, chapitre, base_path) :
-    
     base_url = f"https://anime-sama.to/s2/scans/{nomOeuvre}/"
     url_chapitre = f"{base_url}{chapitre}/"
     pages, chapitres = nbPages(f"{nomOeuvre}", f"{chapitre}")
@@ -44,5 +46,5 @@ def DownloadChap(nomOeuvre, chapitre, base_path) :
     with ThreadPoolExecutor(max_workers=10) as executor:
         executor.map(toute_les_img, range(1, pages + 1))
     
-    images_to_html(chemin,pages,nomOeuvre,chapitre,f"{base_path}/{nomOeuvre}")
+    images_to_html(chemin,pages,nomOeuvre,(chapitre - 1),f"{base_path}/{nomOeuvre}")
     print(f"Chapitre : {chapitre} Téléchargé")
