@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 import base64
 
 def images_to_html(chemin_chap, nbPages, nomOeuvre, numChapitre, chemin_save):
+    # cree une page html avec les images en base64 pour lecture hors ligne
     html = []
     with open("css.txt","r") as f:
         css = f.read()
@@ -21,6 +22,7 @@ def images_to_html(chemin_chap, nbPages, nomOeuvre, numChapitre, chemin_save):
             f.write(lines)
 
 def DownloadChap(nomOeuvre, chapitre, base_path) :
+    # gere le telechargement d un chapitre complet
     base_url = f"https://anime-sama.to/s2/scans/{nomOeuvre}/"
     url_chapitre = f"{base_url}{chapitre+1}/"
     pages, chapitres = nbPages(f"{nomOeuvre}", f"{chapitre}")
@@ -39,6 +41,7 @@ def DownloadChap(nomOeuvre, chapitre, base_path) :
     }
 
     def toute_les_img(i):
+        # recupere une image precise
         url = f"{url_chapitre}{i}.jpg"
         reponse = requests.get(url, headers=headers)
         download(reponse, f"{chemin}/{i}")

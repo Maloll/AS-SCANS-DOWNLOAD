@@ -5,20 +5,22 @@ from AS_scrap_utils import *
 from Download import DownloadChap
 import shutil
 import time
-import json
 
+# url de base pour le catalogue
 search_url = "https://anime-sama.to/catalogue/?type[]=Scans&search="
 
-
 def choose_path():
-    base_path = input("Veuillez ajoutez un chemin de téléchargement \n(ex : \"C:/Users/user1/Documents/Scans\"): ")
+    # configure le dossier de destination
+    base_path = input("Veuillez ajoutez un chemin de telechargement \n(ex : \"C:/Users/user1/Documents/Scans\"): ")
     data = {"download_path": f"{base_path}"}
     with open("settings.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
+
 if not os.path.exists("settings.json") :
     choose_path()
 
+# charge la configuration
 if os.path.exists("settings.json"):
     with open("settings.json", "r") as f :
         jsonData = json.load(f)
@@ -26,7 +28,7 @@ if os.path.exists("settings.json"):
         if not os.path.exists(base_path):
             choose_path()
 
-
+# debut du script cli
 system('cls')
 search = input("Recherche : ")
 system('cls')
@@ -38,6 +40,7 @@ elif len(recherches) < 1:
     print("Aucun résultat")
     exit()
 else:
+    # selection du manga
     choix_scan = int(input("Choix Scan : "))
 if choix_scan:
     system('cls')
@@ -54,6 +57,7 @@ if choix_scan:
         lien = les_seasons[choix_saison - 1]['lien']
         nomOeuvre = getNomOeuvre(lien)
     chapValide = False
+    # selection de la plage de chapitres
     while not chapValide :
         system('cls')
         b, c = nbPages(nomOeuvre, 1)

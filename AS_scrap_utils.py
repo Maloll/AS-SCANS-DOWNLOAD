@@ -3,19 +3,17 @@ import requests
 from bs4 import BeautifulSoup
 
 
-
 def nettoyage(title):
+    # nettoie le titre pour les noms de dossiers
     name = title.lower().replace(" ", "_")
     return "".join(c for c in name if c.isalnum() or c == "_")
 
-
-
 def est_le_bon_pannel(tag):
+    # verifie si la div contient le script des scans
     return tag.name == "div" and tag.find("script", recursive=False) is not None
 
-
-
 def recherche(search_url):
+    # lance la recherche sur le catalogue
     reponse = requests.get(search_url)
     soup = BeautifulSoup(reponse.text, 'html.parser')
     cartes = soup.find_all('div', class_='catalog-card')
@@ -41,9 +39,8 @@ def recherche(search_url):
         data.append(item)
     return data
 
-
-
 def seasons(url_choix):
+    # recupere les differentes saisons ou arcs dispos
     reponse = requests.get(url_choix)
     soup = BeautifulSoup(reponse.text, 'html.parser')
     titre_oeuvre = soup.find('h4', id="titreOeuvre").get_text(strip=True)
@@ -63,9 +60,8 @@ def seasons(url_choix):
                     i += 1
     return seasons
 
-
-
 def nbEpisodes(url_saison):
+    # recupere la liste des episodes si applicable
     reponse = requests.get(f"{url_saison}/episodes.js")
     lecteurs = re.findall(r"var (.*?) = \[(.*?)\];", reponse.text, re.DOTALL)
     if lecteurs:
@@ -76,15 +72,14 @@ def nbEpisodes(url_saison):
                 return re.findall(r"\'https://(.*?)\'", lecteur[1], re.DOTALL)
     return []
 
-
 def download(reponse, titre):
+    # sauvegarde le contenu binaire en jpg
     with open(f"{titre}.jpg", "wb") as fichier:
         fichier.write(reponse.content)
     #print(f"Page {titre} enregistré")
 
-
-
 def nbPages(Oeuvre, chapitre):
+    # interroge l api pour le nombre de pages
     try:
         api = "https://anime-sama.to/s2/scans/get_nb_chap_et_img.php"
         settings = {"oeuvre" : f"{Oeuvre}"}
@@ -94,14 +89,14 @@ def nbPages(Oeuvre, chapitre):
             return json_data[f'{chapitre}'], len(json_data)
     except : return "erreur", "erreur"
     
-
 def getNomOeuvre(url):
+    # recupere le titre propre de l oeuvre
     reponse = requests.get(url)
     soup = BeautifulSoup(reponse.text, 'html.parser')
     return soup.find('h3', id="titreOeuvre").get_text(strip=False)
 
-
 def verifChap(nomOeuvre, chapitre):
+    # verifie si le chapitre existe sur le serveur
     base_url = f"https://anime-sama.to/s2/scans/{nomOeuvre}/"
     url = f"{base_url}{chapitre}/1.jpg"
     if requests.head(url).status_code == 200:
