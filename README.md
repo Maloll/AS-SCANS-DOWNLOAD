@@ -1,5 +1,5 @@
 # AS-SCANS-DOWNLOAD
-
+# ❌ BROKEN
 Un outil simple en ligne de commande (CLI) pour naviguer et télécharger rapidement des scans directement depuis **Anime-Sama**.
 
 ## 🚀 Fonctionnalités
@@ -34,7 +34,7 @@ cd AS-SCANS-DOWNLOAD
 python main.py
 ```
 
-## 2. Télécharger les dépendances 
+## 2. Télécharger les dépendances
 ```bash
 pip install requests beautifulsoup4 numpy opencv-python
 ```
